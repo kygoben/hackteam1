@@ -13,8 +13,8 @@ export default async function getIngredient(req: NextApiRequest, res: NextApiRes
 
     const { data, error } = await supabase
     .from('Ingredients')
-    .select(`
-        name`).eq('name', ing);
+    .select(`name`)
+    .eq('name', ing);
 
     if (error) {
       return res.status(500).json({ error: error.message });
