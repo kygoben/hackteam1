@@ -11,7 +11,7 @@ export default function LogIn() {
         <div className="container" style={{ padding: '50px 0 100px 0' }}>
             {!session ? (
                 <Auth
-                    providers={['google']}
+                    providers={[]}
                     supabaseClient={supabase}
                     theme="dark"
                 />
