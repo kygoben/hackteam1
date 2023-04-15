@@ -1,35 +1,28 @@
-import Link from "next/link"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import { useUser } from '@supabase/auth-helpers-react'
+import Link from "next/link";
 
-export default function NavBar() {
-  const [loggedIn, setLoggedIn] = useState(false)
-  const router = useRouter()
-  const user = useUser()
-
-  useEffect(() => {
-    
-  }, [])
-
+const NavBar = () => {
   return (
-    <>
-      <nav className=' flex flex-row sm:flex-row sm:text-left sm:justify-between w-full border-b-2 border-d-blue z-10 items-center'>
-        <div className='text-left text-4xl text-black ml-2 font-extralight'>
-          <Link href='/'>Swift TA</Link>
+    <nav className="flex items-center justify-between flex-wrap bg-gray-800 p-4">
+      <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <Link href="/" className="font-bold text-xl tracking-tight">
+          uBrew
+        </Link>
+      </div>
+      <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div className="text-sm lg:flex-grow">
+          {/* Empty space */}
         </div>
-        <div className='flex flex-col sm:flex-row text-xl sm:justify-end'>
-          {user && <div className="flex flex-row">
-            <Link href='/ingredients' className='text-black m-2 no-underline'>ingredients</Link>
-            <Link href='/recipes' className='text-black m-2 no-underline'>recipes</Link>
-          </div>}
+        <div>
+          <Link href="/ingredients" className="mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-10">
+              Ingredients
+          </Link>
+          <Link href="/recipes" className="mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-10">
+              Recipes
+          </Link>
+        </div>
+      </div>
+    </nav>
+  );
+};
 
-          {!user && <div className="flex flex-row">
-            <Link href='/ingredients' className='text-black m-2 no-underline'>ingredients</Link>
-            <Link href='/recipes' className='text-black m-2 no-underline'>no</Link>
-          </div>}
-        </div>
-      </nav>
-    </>
-  )
-}
+export default NavBar;
