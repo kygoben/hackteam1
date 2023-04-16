@@ -35,7 +35,7 @@ export default function Account() {
             }
         }
         fetchData()
-    }, [])
+    }, [uid])
 
 
     return (
