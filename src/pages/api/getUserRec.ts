@@ -1,22 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createClient } from '@supabase/supabase-js'
+import { Recipe } from '@/types'
+import { RecipeIngredient } from '@/types'
 
 type Data = {
     recipes?: Recipe[]
-}
-
-type Recipe = {
-    rid: number,
-    name: string,
-    tags: string[],
-    ingredients: Ingredient[],
-    img: string
-}
-
-type Ingredient = {
-    name: string,
-    amount: string
 }
 
 export default async function handler(
@@ -29,7 +18,6 @@ export default async function handler(
     )
 
     const uid = req.query.uid;
-    console.log(uid)
 
     if(!uid) {
         console.error('no uid')
@@ -61,19 +49,20 @@ export default async function handler(
                 .select('iid, amount')
                 .eq('rid', recipe.id);
 
-            const recipeIngredients: Ingredient[] = ingredientData?.map((ingredient) => ({
+            const recipeIngredients: RecipeIngredient[] = ingredientData?.map((ingredient) => ({
                 name: ingredient.iid,
                 amount: ingredient.amount,
             })) || [];
 
-
+                
             const formattedRecipe: Recipe = {
-                rid: recipe.id,
+                id: recipe.id,
                 name: recipe.name,
                 tags: recipeTags,
                 img: recipe.imageURL,
                 ingredients: recipeIngredients,
             };
+            console.log("test");
             console.log(formattedRecipe);
 
             recipes.push(formattedRecipe);

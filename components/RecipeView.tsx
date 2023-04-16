@@ -27,7 +27,7 @@ function RecipeView({ recipe }: RecipeViewProps) {
   const router = useRouter();
   if(user===null){
       router.push('/');
-    return;}
+    return<div></div>;}
   return (
     <div className="bg-white shadow-md rounded-md p-6 flex flex-col gap-4">
       <h2 className="text-2xl font-semibold text-black">{recipe.name}</h2>
@@ -51,7 +51,7 @@ function RecipeView({ recipe }: RecipeViewProps) {
       </ul>
         <img width={100} height={100} src={recipe.img} alt="bruh"></img>
         console.log(recipe);
-        <button className="text-color text-black border-t" onClick={like(recipe.rid, user.id)}>Like me</button>
+        <button className="text-color text-black border-t" onClick={like(recipe.id, user.id)}>Like me</button>
     </div>
   );
 }
