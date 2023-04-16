@@ -20,10 +20,16 @@ export default function Account() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch(`/api/getUserRec?uid=${uid}`)
-                const data = await response.json()
-                console.log(data)
-                setRecipes(data.recipes)
+                if (uid) {
+                    console.log(uid)
+                    const response = await fetch(`/api/getUserRec?uid=${uid}`)
+                    const data = await response.json()
+                    console.log(data)
+                    setRecipes(data.recipes)
+                }
+                else {
+                    console.log(`no uid ${uid}`)
+                }
             } catch (error) {
                 console.error(error)
             }

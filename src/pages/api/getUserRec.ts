@@ -9,7 +9,7 @@ type Data = {
 type Recipe = {
     name: string,
     tags: string[],
-    ingredients: string[]
+    ingredients: Ingredient[]
 }
 
 type Ingredient = {
@@ -27,19 +27,67 @@ export default async function handler(
     )
 
     const uid = req.query.uid;
+    console.log(uid)
 
+    if(!uid) {
+        console.error('no uid')
+        return
+    }
+
+    // Get initial recipes from uid
     const { data: recipesData, error: recipesError } = await supabase
         .from('Recipes')
-        .select('*, recipes_tags(*), recipes_ingredients(*)')
+        .select('*')
         .eq('uid', uid);
+
+    console.log(`Data: ${JSON.stringify(recipesData)}`)
+
+    let recipes: Recipe[] = [];
+    if (recipesData) {
+        for (const recipe of recipesData) {
+            // Get tags
+            const { data: tagData, error: tagError } = await supabase
+                .from('recipes_tags')
+                .select('tag')
+                .eq('rid', recipe.id);
+
+            // Get ingredients
+            const { data: ingredientData, error: ingredientError } = await supabase
+                .from('recipes_ingredients')
+                .select('name, amount')
+                .eq('rid', recipe.id);
+
+            const recipeTags = tagData?.map((tag) => tag.tag) || [];
+            const recipeIngredients: Ingredient[] = ingredientData?.map((ingredient) => ({
+                name: ingredient.name,
+                amount: ingredient.amount,
+            })) || [];
+
+            console.log(`Recipe tags: ${recipe.name}:: ${recipeTags}`)
+            console.log(`Recipe ingr: ${recipe.name}:: ${recipeIngredients}`)
+
+
+            const formattedRecipe: Recipe = {
+                name: recipe.name,
+                tags: recipeTags,
+                ingredients: recipeIngredients,
+            };
+
+            recipes.push(formattedRecipe);
+        }
+
+        res.status(200).json({ recipes })
+    }
+    else {
+        res.status(401)
+    }
+
+
 
     if (recipesError) {
         console.error(recipesError)
         return
     }
 
-
-
-    // res.status(200).json({ recipes })
 }
 
