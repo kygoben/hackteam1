@@ -5,39 +5,18 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { Recipe } from "@/types";
 
 export default function Account() {
-    const [recipes, setRecipes] = useState<Recipe[]>([])
-    const user = useUser()
-    const uid = user?.id
+    const session = useSession()
+    const supabase = useSupabaseClient()
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                if (uid) {
-                    console.log(uid)
-                    const response = await fetch(`/api/getUserRec?uid=${uid}`)
-                    const data = await response.json()
-                    console.log(data)
-                    setRecipes(data.recipes)
-                }
-                else {
-                    console.log(`no uid ${uid}`)
-                }
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        fetchData()
-    }, [uid])
-
+    const handleLogout = async () => {
+        await supabase.auth.signOut()
+    }
 
     return (
-        <div className="flex flex-col items-center">
-            <h1 className="text-3xl font-semibold my-4">Your Recipes</h1>
-            <div className="flex flex-col gap-4">
-                {recipes.map((recipe) => (
-                    <RecipeView key={recipe.id} recipe={recipe} />
-                ))}
-            </div>
+        // Render your account page UI here
+        <div>
+            <h1>Welcome, {session.user.email}</h1>
+            <button onClick={handleLogout}>Logout</button>
         </div>
-    );
+    )
 }

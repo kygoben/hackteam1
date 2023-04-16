@@ -2,6 +2,7 @@ import { Auth } from '@supabase/auth-ui-react'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 
 
+
 export default function LogIn() {
     const session = useSession()
     const supabase = useSupabaseClient()
