@@ -11,7 +11,6 @@ const CreateRecipes = () => {
     const [name, setName] = useState('');
 
     const user = useUser();
-    console.log(user);
     const createRecipe = async () => {
         const response = await fetch('/api/recipe', {
             method: 'POST',
@@ -25,7 +24,6 @@ const CreateRecipes = () => {
         });
 
         const data = await response.json();
-        console.log(data);
     }
 
     return (
