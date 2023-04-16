@@ -17,6 +17,6 @@ export default async function image(req: NextApiRequest, res: NextApiResponse) {
     .update({image: link.data.publicUrl})
     .match({rid: filename.rid});
 
-res.status(200).json({ refs });
+res.status(200);
   }
 }
