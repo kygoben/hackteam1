@@ -14,3 +14,8 @@ export type RecipeDatabase = Recipe & {
     uid: string;
 };
 
+export type Image = {
+  rid: string;
+  filename: string;
+};
+
