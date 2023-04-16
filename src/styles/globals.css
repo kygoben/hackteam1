@@ -25,3 +25,44 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+#email,
+#password,
+#auth-sign-in > div > button {
+  padding-left: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 5px;
+  background-color: #1f2937;
+}
+
+#auth-sign-in {
+  padding-left: 30%;
+  padding-right: 30%;
+}
+
+/* Bold email label */
+#auth-sign-in
+  > div
+  > div.supabase-auth-ui_ui-container.c-jTXIoq.c-jTXIoq-bsgKCL-direction-vertical.c-jTXIoq-bXHFxK-gap-large
+  > div:nth-child(1)
+  > label {
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+/* Bold password label */
+#auth-sign-in
+  > div
+  > div.supabase-auth-ui_ui-container.c-jTXIoq.c-jTXIoq-bsgKCL-direction-vertical.c-jTXIoq-bXHFxK-gap-large
+  > div:nth-child(2)
+  > label {
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+/* Interactive button styling (on hover, white background with blk text*/
+#auth-sign-in > div > button:hover {
+  color: black;
+  background-color: white;
+}
