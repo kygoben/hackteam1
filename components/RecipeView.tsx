@@ -7,7 +7,7 @@ interface Recipe {
     tags: string[];
     ingredients: { name: string; amount: string }[];
     created_at: string;
-    img: string;
+    img?: string;
 }
 
 type RecipeViewProps = {
