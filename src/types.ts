@@ -1,6 +1,7 @@
 export type RecipeIngredient = {
-  name: string;
+  name?: string;
   amount: string;
+  tagName?: string;
 };
 
 export type Recipe = {

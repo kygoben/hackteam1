@@ -20,7 +20,8 @@ export const SearchIngredients = ({
         if (response.status === 200) {
             onIngredientSelect({
               name: data.name,
-              amount
+              amount,
+              tagName: data.tagName
             });
             setInput('');
             setAmount('');

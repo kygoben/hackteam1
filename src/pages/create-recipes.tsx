@@ -9,8 +9,24 @@ const CreateRecipes = () => {
     const [ingredients, setIngredients] = useState<RecipeIngredient[]>([]);
     const [isPublic, setIsPublic] = useState(false);
     const [name, setName] = useState('');
-
     const user = useUser();
+
+    const addIngredient = (ingredient: RecipeIngredient) => {
+        const inList = ingredients.some((ing) => {
+            const list = [ing.name, ing.tagName];
+            
+            if (ingredient.tagName && list.includes(ingredient.tagName))
+                return true;
+            if (ingredient.name && list.includes(ingredient.name))
+                return true;
+            return false;
+        });
+        
+        if (!inList) {
+            setIngredients(prev => [...prev, ingredient]);
+        }
+    }
+
     const createRecipe = async () => {
         const response = await fetch('/api/recipe', {
             method: 'POST',
@@ -23,7 +39,9 @@ const CreateRecipes = () => {
             })
         });
 
-        const data = await response.json();
+        setIngredients([]);
+        setIsPublic(false);
+        setName('');
     }
 
     return (
@@ -34,14 +52,16 @@ const CreateRecipes = () => {
                 placeholder="Recipe Name"
             />
             <div>
-                {ingredients.map(({name, amount}) => {
+                {ingredients.map(({name, amount, tagName}) => {
+                    const displayName = name ? name : tagName
+
                     return (
-                        <div key={name}>{`${name} | ${amount}`}</div>
+                        <div key={displayName}>{`${displayName} | ${amount}`}</div>
                     );
                 })}
             </div>
             <SearchIngredients
-                onIngredientSelect={ingredient => setIngredients((prev) => [...prev, ingredient])}
+                onIngredientSelect={addIngredient}
                 buttonTitle="Add"
             />
             <label

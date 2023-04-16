@@ -13,7 +13,7 @@ const getIng = (ing: string | string[] | undefined): string => {
 export default async function getIngredient(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     const ing: string = getIng(req.query.ing);
-    const { data, error } = await supabase
+    const { data: d1, error: e1 } = await supabase
         .from('Ingredients')
         .select()
         .textSearch('name', ing, {
@@ -21,15 +21,30 @@ export default async function getIngredient(req: NextApiRequest, res: NextApiRes
             config: 'english'
         });
 
-    if (error) {
-      return res.status(500).json({ error: error.message });
+    if (e1) {
+      return res.status(500).json({ error: e1.message });
     }
 
-    if (data && data.length > 0) {
-      return res.status(200).json(data[0]);
-    } else {
-      return res.status(404).json({ error: 'No ingredient found' });
+    const { data: d2, error: e2 } = await supabase
+        .from('ingredientTags')
+        .select()
+        .textSearch('name', ing, {
+            type: 'websearch',
+            config: 'english'
+        });
+
+    if (e2) {
+      return res.status(500).json({ error: e2.message });
     }
+
+    if (d1.length > 0 || d2.length > 0) {
+        return res.status(200).json({
+            name: d1.length > 0 ? d1[0].name : undefined,
+            tagName: d2.length > 0 ? d2[0].name : undefined
+        });
+    }
+
+    return res.status(404).json({ error: 'No ingredient found' });
   } else {
     res.setHeader('Allow', 'GET');
     res.status(405).json({ error: `Method ${req.method} not allowed` });
