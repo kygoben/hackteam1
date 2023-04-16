@@ -13,7 +13,6 @@ export default function Home() {
 
   return (
     <div className='flex flex-col h-screen max-h-screen'>
-      <NavBar />
       {user && <div>
         <h1>Welcome to uBrew!</h1>
         <h3>Your go-to for drink concoction and fun cocktail ideas.</h3>
