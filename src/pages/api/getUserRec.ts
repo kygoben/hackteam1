@@ -48,23 +48,21 @@ export default async function handler(
             // Get tags
             const { data: tagData, error: tagError } = await supabase
                 .from('recipes_tags')
-                .select('tag')
+                .select('tname')
                 .eq('rid', recipe.id);
+
+            const recipeTags = tagData?.map((tag) => tag.tname) || [];
 
             // Get ingredients
             const { data: ingredientData, error: ingredientError } = await supabase
                 .from('recipes_ingredients')
-                .select('name, amount')
+                .select('iid, amount')
                 .eq('rid', recipe.id);
 
-            const recipeTags = tagData?.map((tag) => tag.tag) || [];
             const recipeIngredients: Ingredient[] = ingredientData?.map((ingredient) => ({
-                name: ingredient.name,
+                name: ingredient.iid,
                 amount: ingredient.amount,
             })) || [];
-
-            console.log(`Recipe tags: ${recipe.name}:: ${recipeTags}`)
-            console.log(`Recipe ingr: ${recipe.name}:: ${recipeIngredients}`)
 
 
             const formattedRecipe: Recipe = {
