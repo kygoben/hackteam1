@@ -18,7 +18,7 @@ export const SearchIngredients = ({
         
         if (status === 200) {
             onIngredientSelect({
-              ingredient: input,
+              name: input,
               amount
             });
             setInput('');
