@@ -19,6 +19,9 @@ const NavBar = () => {
           <Link href="/recipes" className="mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-10">
               My Recipes
           </Link>
+          <Link href="/create-recipes" className="mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-10">
+              Create Recipe
+          </Link>
           <Link href="/account" className="mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-10">
               Profile
           </Link>
