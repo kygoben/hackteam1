@@ -1,20 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createClient } from '@supabase/supabase-js'
+import { Recipe } from '@/types'
+import { RecipeIngredient } from '@/types'
 
 type Data = {
     recipes?: Recipe[]
-}
-
-type Recipe = {
-    name: string,
-    tags: string[],
-    ingredients: Ingredients[]
-}
-
-type Ingredients = {
-    name: string,
-    amount: string
 }
 
 export default async function handler(
