@@ -4,11 +4,12 @@ export type RecipeIngredient = {
 };
 
 export type Recipe = {
+  id: number;
   name: string;
-  isPublic: boolean;
+  isPublic?: boolean;
   tags: string[];
   ingredients: RecipeIngredient[];
-  url: string;
+  img?: string;
 };
 
 export type RecipeDatabase = Recipe & {

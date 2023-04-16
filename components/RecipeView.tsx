@@ -1,14 +1,6 @@
 import React from "react";
 import Image from 'next/image'
-
-interface Recipe {
-    id: number;
-    name: string;
-    tags: string[];
-    ingredients: { name: string; amount: string }[];
-    created_at: string;
-    img?: string;
-}
+import { Recipe } from "@/types";
 
 type RecipeViewProps = {
     recipe: Recipe
