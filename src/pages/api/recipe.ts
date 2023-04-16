@@ -1,35 +1,31 @@
 // pages/api/recipe.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabase } from '../../../supabaseClient';
-
-type Recipe = {
-  name: string;
-  ingredient_arr: JSON[];
-  pub: boolean;
-  tags: string[];
-};
+import { RecipeDatabase } from '@/types';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { name, ingredient_arr, pub, tags } = req.body as Recipe;
+    const recipe: RecipeDatabase = JSON.parse(req.body);
 
-    try {
-      const { data, error } = await supabase
+    const {error} = await supabase
         .from('Recipes')
-        .insert([{ name, ingredient_arr, pub, tags }]);
+        .insert([{
+            name: recipe.name,
+            isPublic: recipe.isPublic,
+            tags: recipe.tags,
+            ingredientsArr: recipe.ingredients,
+            created_at: new Date().toISOString(),
+            uid: recipe.uid
+        }]);
 
-      if (error) {
-        throw error;
-      }
+    console.log(error)
 
-      if (data && data.length > 0) {
-        res.status(201).json(data[0]);
-      } else {
+    if (error) {
         res.status(500).json({ error: 'Failed to insert data' });
-      }
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+        return;
     }
+
+    res.status(200).json(recipe);
   } else {
     res.setHeader('Allow', 'POST');
     res.status(405).json({ error: `Method ${req.method} not allowed` });
