@@ -50,7 +50,6 @@ const CreateRecipes = () => {
                 <h1 className="text-4xl font-semibold text-center mb-6">Create Recipe</h1>
                 <div className="bg-white p-8 rounded-lg shadow-md">
                     <Input
-                        className="mb-4"
                         value={name}
                         onChange={e => setName(e.target.value)}
                         placeholder="Recipe Name"
