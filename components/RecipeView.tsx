@@ -1,12 +1,33 @@
 import React from "react";
-import Image from 'next/image'
 import { Recipe } from "@/types";
+import { useUser } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 
 type RecipeViewProps = {
     recipe: Recipe
   }
 
+
+  const like = (rid: number, uid: string)=> async () => {
+
+    console.log(rid);
+    // console.log(uid);
+      const response = await fetch('/api/like', {
+          method: 'POST',
+          body: JSON.stringify({
+              rid,
+              uid
+          })
+      });
+      const data = await response.json();
+  }
+
 function RecipeView({ recipe }: RecipeViewProps) {
+  const user = useUser();
+  const router = useRouter();
+  if(user===null){
+      router.push('/');
+    return;}
   return (
     <div className="bg-white shadow-md rounded-md p-6 flex flex-col gap-4">
       <h2 className="text-2xl font-semibold text-black">{recipe.name}</h2>
@@ -29,6 +50,8 @@ function RecipeView({ recipe }: RecipeViewProps) {
         ))}
       </ul>
         <img width={100} height={100} src={recipe.img} alt="bruh"></img>
+        console.log(recipe);
+        <button className="text-color text-black border-t" onClick={like(recipe.rid, user.id)}>Like me</button>
     </div>
   );
 }

@@ -7,6 +7,7 @@ type Data = {
 }
 
 type Recipe = {
+    rid: number,
     name: string,
     tags: string[],
     ingredients: Ingredient[],
@@ -67,11 +68,13 @@ export default async function handler(
 
 
             const formattedRecipe: Recipe = {
+                rid: recipe.id,
                 name: recipe.name,
                 tags: recipeTags,
                 img: recipe.imageURL,
                 ingredients: recipeIngredients,
             };
+            console.log(formattedRecipe);
 
             recipes.push(formattedRecipe);
         }
