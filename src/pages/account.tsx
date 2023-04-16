@@ -31,7 +31,6 @@ export default function Account() {
 
     return (
         <div className="flex flex-col items-center">
-            <NavBar />
             <h1 className="text-3xl font-semibold mb-4">Your Recipes</h1>
             <div className="flex flex-col gap-4">
                 {recipes.map((recipe) => (

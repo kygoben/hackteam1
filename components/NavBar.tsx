@@ -14,10 +14,13 @@ const NavBar = () => {
         </div>
         <div>
           <Link href="/ingredients" className="mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-10">
-              Ingredients
+              My Ingredients
           </Link>
           <Link href="/recipes" className="mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-10">
-              Recipes
+              My Recipes
+          </Link>
+          <Link href="/account" className="mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-white mr-10">
+              Profile
           </Link>
         </div>
       </div>
