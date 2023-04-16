@@ -12,7 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             rid: like.rid,
             uid: like.uid,
         }])
-
         res.status(200).json({ name: 'John Doe' })
 }
 }

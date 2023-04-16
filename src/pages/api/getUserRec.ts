@@ -54,6 +54,22 @@ export default async function handler(
                 amount: ingredient.amount,
             })) || [];
 
+            // const { data: likesData, error: likesError } = await supabase
+            // .from('Likes')
+            // .select( count: 'rid' })
+            // .eq('rid', recipe.id)
+
+            const { data, error } = await supabase
+        .from('Likes')
+        .select('*')
+        .eq('rid', recipe.id);
+
+      if (error) {
+        throw error;
+      }
+
+      const totalLikes = data.length;
+
                 
             const formattedRecipe: Recipe = {
                 id: recipe.id,
@@ -61,7 +77,10 @@ export default async function handler(
                 tags: recipeTags,
                 img: recipe.imageURL,
                 ingredients: recipeIngredients,
+                likes: totalLikes,
             };
+
+            console.log(formattedRecipe);
 
             recipes.push(formattedRecipe);
         }

@@ -11,6 +11,7 @@ export type Recipe = {
   tags: string[];
   ingredients: RecipeIngredient[];
   img?: string;
+  likes: number;
 };
 
 export type RecipeDatabase = Recipe & {

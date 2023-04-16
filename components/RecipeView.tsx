@@ -30,7 +30,7 @@ function RecipeView({ recipe }: RecipeViewProps) {
     return<div></div>;}
   return (
     <div className="bg-white shadow-md rounded-md p-6 flex flex-col gap-4">
-      <h2 className="text-2xl font-semibold text-black">{recipe.name}</h2>
+      <h2 className="text-2xl font-semibold text-black">{recipe.name} {recipe.likes}</h2>
       <div className="flex flex-wrap gap-2">
         {recipe.tags.map((tag) => (
           <span
