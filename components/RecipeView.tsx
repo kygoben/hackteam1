@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image'
 
 interface Recipe {
     id: number;
@@ -6,6 +7,7 @@ interface Recipe {
     tags: string[];
     ingredients: { name: string; amount: string }[];
     created_at: string;
+    img: string;
 }
 
 type RecipeViewProps = {
@@ -34,6 +36,14 @@ function RecipeView({ recipe }: RecipeViewProps) {
           </li>
         ))}
       </ul>
+      {/* <Image src="https://bkprbcuukoonxlbopxdd.supabase.co/storage/v1/object/public/images/canvas.iastate.edu_courses_98760_quizzes_466738_take(Samsung%20Galaxy%20S20%20Ultra).png"
+      alt= "bruh"
+      width={100} height={100}>
+        </Image> */}
+  console.log(recipe);
+  
+        <img width={100} height={100} src={recipe.img} alt="Italian Trulli"></img>
+
     </div>
   );
 }
