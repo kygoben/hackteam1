@@ -9,7 +9,8 @@ type Data = {
 type Recipe = {
     name: string,
     tags: string[],
-    ingredients: Ingredient[]
+    ingredients: Ingredient[],
+    img: string
 }
 
 type Ingredient = {
@@ -68,6 +69,7 @@ export default async function handler(
             const formattedRecipe: Recipe = {
                 name: recipe.name,
                 tags: recipeTags,
+                img: recipe.imageURL,
                 ingredients: recipeIngredients,
             };
 

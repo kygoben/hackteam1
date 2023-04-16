@@ -9,6 +9,7 @@ interface Recipe {
     tags: string[];
     ingredients: { name: string; amount: string }[];
     created_at: string;
+    url: string;
 }
 
 
