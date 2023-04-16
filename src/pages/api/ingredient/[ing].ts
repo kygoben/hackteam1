@@ -2,11 +2,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabase } from '../../../../supabaseClient';
 
-type Ingredient = {
-  name: string;
-  // Add other columns as needed
-};
-
 const getIng = (ing: string | string[] | undefined): string => {
     if (Array.isArray(ing)) {
         return ing[0]

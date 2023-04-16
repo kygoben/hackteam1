@@ -14,11 +14,12 @@ export const SearchIngredients = ({
     const [input, setInput] = useState('');
     const [amount, setAmount] = useState('');
     const handleButtonPress = async () => {
-        const {status} = await fetch(`/api/ingredient/${input}`);
+        const response = await fetch(`/api/ingredient/${input}`);
+        const data = await response.json();
         
-        if (status === 200) {
+        if (response.status === 200) {
             onIngredientSelect({
-              name: input,
+              name: data.name,
               amount
             });
             setInput('');
