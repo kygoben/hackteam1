@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { createClient } from '@supabase/supabase-js'
 import { Recipe } from '@/types'
 import { RecipeIngredient } from '@/types'
+import { supabase } from '../../../supabaseClient'
 
 type Data = {
     recipes?: Recipe[]
@@ -12,17 +12,12 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data>
 ) {
-    const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    )
-
     const uid = req.query.uid;
     const searchTerm = req.query.searchTerm;
 
     const { data, error } = await supabase
-        .from('recipes')
-        .select('*')
+        .from('Recipes')
+        .select()
         .filter('name', 'ilike', `%${searchTerm}%`)
         .or(`isPublic.eq.TRUE,uid.eq.${uid}`)
         .order('created_at', { ascending: false });
@@ -31,11 +26,11 @@ export default async function handler(
 
     console.log(error)
 
-    if (data) {
-        res.status(401)
+    if (data === null) {
+        return res.status(401)
     }
 
-    const recipes = data?.map((recipe) => {
+    const recipes = data.map((recipe) => {
         const ingredients = recipe.ingredientsArr.map(({ name, amount }: { name: string, amount: string }) => ({
             name,
             amount,
