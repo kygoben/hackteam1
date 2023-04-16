@@ -1,5 +1,4 @@
 import { useState } from "react";
-import NavBar from "../../components/NavBar";
 import RecipeView from "../../components/RecipeView";
 import { useUser } from "@supabase/auth-helpers-react";
 
@@ -35,7 +34,6 @@ export default function Search() {
 
   return (
     <div>
-      <NavBar />
       <div className="p-4">
         <div className="mb-4">
           <input
