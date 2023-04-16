@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import NavBar from "../../components/NavBar"
 import RecipeView from "../../components/RecipeView";
+import { useUser } from "@supabase/auth-helpers-react";
 
 interface Recipe {
     id: number;
@@ -13,11 +14,13 @@ interface Recipe {
 
 export default function Account() {
     const [recipes, setRecipes] = useState<Recipe[]>([])
+    const user = useUser()
+    const uid = user?.id
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('/api/getUserRec')
+                const response = await fetch(`/api/getUserRec?uid=${uid}`)
                 const data = await response.json()
                 console.log(data)
                 setRecipes(data.recipes)
