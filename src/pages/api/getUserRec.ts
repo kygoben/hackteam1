@@ -3,16 +3,16 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { createClient } from '@supabase/supabase-js'
 
 type Data = {
-    recipes: Recipe[]
+    recipes?: Recipe[]
 }
 
 type Recipe = {
     name: string,
     tags: string[],
-    ingredients: Ingredients[]
+    ingredients: string[]
 }
 
-type Ingredients = {
+type Ingredient = {
     name: string,
     amount: string
 }
@@ -26,28 +26,20 @@ export default async function handler(
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
     )
 
-    const uid = 'a964d8c9-d9bd-4f79-bd8a-9f2d45fb606a'
+    const uid = req.query.uid;
 
-    const { data, error } = await supabase
+    const { data: recipesData, error: recipesError } = await supabase
         .from('Recipes')
-        .select('*')
-        .eq('uid', uid)
+        .select('*, recipes_tags(*), recipes_ingredients(*)')
+        .eq('uid', uid);
 
-    if (error) {
-        console.error(error)
+    if (recipesError) {
+        console.error(recipesError)
         return
     }
 
-    const recipes = data.map((recipe) => {
-        const ingredients = recipe.ingredientsArr.map(({ name, amount }: { name: string, amount: string }) => ({
-            name,
-            amount,
-        }))
 
-        const { id, name, tags, created_at } = recipe
-        return { id, name, tags, created_at, ingredients }
-    })
 
-    res.status(200).json({ recipes })
+    // res.status(200).json({ recipes })
 }
 
