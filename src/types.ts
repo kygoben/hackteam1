@@ -8,6 +8,7 @@ export type Recipe = {
   isPublic: boolean;
   tags: string[];
   ingredients: RecipeIngredient[];
+  url: string;
 };
 
 export type RecipeDatabase = Recipe & {

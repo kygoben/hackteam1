@@ -2,16 +2,7 @@ import { useEffect, useState } from "react"
 import NavBar from "../../components/NavBar"
 import RecipeView from "../../components/RecipeView";
 import { useUser } from "@supabase/auth-helpers-react";
-
-interface Recipe {
-    id: number;
-    name: string;
-    tags: string[];
-    ingredients: { name: string; amount: string }[];
-    created_at: string;
-    url: string;
-}
-
+import { Recipe } from "@/types";
 
 export default function Account() {
     const [recipes, setRecipes] = useState<Recipe[]>([])
