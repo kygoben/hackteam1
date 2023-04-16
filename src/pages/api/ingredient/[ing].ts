@@ -7,14 +7,24 @@ type Ingredient = {
   // Add other columns as needed
 };
 
+const getIng = (ing: string | string[] | undefined): string => {
+    if (Array.isArray(ing)) {
+        return ing[0]
+    }
+
+    return ing || '';
+}
+
 export default async function getIngredient(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    const ing = req.query.ing;
-
+    const ing: string = getIng(req.query.ing);
     const { data, error } = await supabase
-    .from('Ingredients')
-    .select(`name`)
-    .eq('name', ing);
+        .from('Ingredients')
+        .select()
+        .textSearch('name', ing, {
+            type: 'websearch',
+            config: 'english'
+        });
 
     if (error) {
       return res.status(500).json({ error: error.message });
