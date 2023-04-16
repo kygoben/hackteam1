@@ -21,3 +21,7 @@ export type Image = {
   filename: string;
 };
 
+export type Likes = {
+  rid: string;
+  uid: string;
+};
