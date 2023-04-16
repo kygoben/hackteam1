@@ -50,7 +50,6 @@ function RecipeView({ recipe }: RecipeViewProps) {
         ))}
       </ul>
         <img width={100} height={100} src={recipe.img} alt="bruh"></img>
-        console.log(recipe);
         <button className="text-color text-black border-t" onClick={like(recipe.id, user.id)}>Like me</button>
     </div>
   );
