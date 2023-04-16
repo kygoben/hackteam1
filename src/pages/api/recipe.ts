@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'POST') {
     const recipe: RecipeDatabase = JSON.parse(req.body);
 
-    const {data, error: e1} = await supabase
+    const {data: d1, error: e1} = await supabase
         .from('Recipes')
         .insert([{
             name: recipe.name,
@@ -17,19 +17,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }])
         .select();
 
-    if (e1 || !data) {
+    if (e1) {
         res.status(500).json({ error: 'Failed to insert data' });
         return;
     }
 
-    const id = data[0].id;
+    const id = d1[0].id;
 
     const {error: e2} = await supabase
         .from('recipes_ingredients')
-        .insert(recipe.ingredients.map(({name, amount}) => ({
+        .insert(recipe.ingredients.map(({name, amount, tagName}) => ({
             iid: name,
             rid: id,
-            amount // TODO there needs to be itname in here, might be a bit of work actually :(
+            amount,
+            itname: tagName
         })));
 
     if (e2) {
