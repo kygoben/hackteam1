@@ -30,7 +30,7 @@ export default async function handler(
         .select('*')
         .eq('uid', uid);
 
-    console.log(`Data: ${JSON.stringify(recipesData)}`)
+    // console.log(`Data: ${JSON.stringify(recipesData)}`)
 
     let recipes: Recipe[] = [];
     if (recipesData) {
@@ -62,8 +62,6 @@ export default async function handler(
                 img: recipe.imageURL,
                 ingredients: recipeIngredients,
             };
-            console.log("test");
-            console.log(formattedRecipe);
 
             recipes.push(formattedRecipe);
         }
